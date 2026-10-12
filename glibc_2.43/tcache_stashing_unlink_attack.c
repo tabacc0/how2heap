@@ -10,11 +10,11 @@
 */
 
 int main(){
-	printf("This is a demonstraction of the tcache stashing unlink attack\n");
+	printf("This is a demonstration of the tcache stashing unlink attack\n");
 	printf("This PoC has been linked and tested against glibc 2.43-2.44 \n");
 	printf("the goal is to use the SmallBin-To-Tcache stashing mechanism to return an\n");
-	printf("arbirary chunk , in our case , we want to return a chunk on the stack\n");
-	printf("this technique also allows us to write a libc address to an arbirary location\n");
+	printf("arbitrary chunk , in our case , we want to return a chunk on the stack\n");
+	printf("this technique also allows us to write a libc address to an arbitrary location\n");
 
 	char * target_chunk[4] = {0};
 	char **target = &target_chunk[2];
@@ -23,7 +23,7 @@ int main(){
 	printf("accounting for metadata , our target's chunk address is : %p\n",target_chunk);
 
 
-	printf("the tcache metadata chunk is allocted and initialized on the first call to \n");
+	printf("the tcache metadata chunk is allocated and initialized on the first call to \n");
 	printf("free with a Tcache size on glibc 2.43-2.44 respectively .\n,");
 	printf("(see __libc_free and tcache_free_init functions)\n");
 	printf("to avoid the tcache allocation messing with the heap layout , we will get it \n");
@@ -33,7 +33,7 @@ int main(){
 	free(init_tcache);
 
 
-	printf("now we allocate our victim chunk ,to avoid speding allcations filling/emptying\n");
+	printf("now we allocate our victim chunk ,to avoid speding allocations filling/emptying\n");
 	printf("the Tcache,we will allocate it as a LargeBin-size chunk , put it in the unsorted");
 	printf("Bin and then cut it by allocating a chunk of a size chosen carefully to make \n");
 	printf("the remainder SmallBin-sized");
@@ -65,7 +65,7 @@ int main(){
 	printf("because the tcache size has grown to 16.\n");
 
 
-	printf("we aready have inactive chunks that we used for guarding and sorting, use them\n");
+	printf("we already have inactive chunks that we used for guarding and sorting, use them\n");
 	printf("as lists\n");
 	char *(*fake_chunklist0)[4] = (char *(*)[4]) guard;
 	char *(*fake_chunklist1)[4] = (char *(*)[4]) put_smallbin;

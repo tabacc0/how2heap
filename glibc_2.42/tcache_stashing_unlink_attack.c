@@ -10,11 +10,11 @@
 */
 
 int main(){
-	printf("This is a demonstraction of the tcache stashing unlink attack\n");
+	printf("This is a demonstration of the tcache stashing unlink attack\n");
 	printf("This PoC has been linked and tested against glibc 2.41-2.42 \n");
 	printf("the goal is to use the SmallBin-To-Tcache stashing mechanism to return an\n");
-	printf("arbirary chunk , in our case , we want to return a chunk on the stack\n");
-	printf("this technique also allows us to write a libc address to an arbirary location\n");
+	printf("arbitrary chunk , in our case , we want to return a chunk on the stack\n");
+	printf("this technique also allows us to write a libc address to an arbitrary location\n");
 
 	char * target_chunk[4] = {0};
 	char **target = &target_chunk[2];
@@ -23,8 +23,8 @@ int main(){
 	printf("accounting for metadata , our target's chunk address is : %p\n",target_chunk);
 
 
-	printf("the tcache metadata chunk is only allocted and initialized on the first call to \n");
-	printf("malloc or calloc with a Tcache size on glibc 2.42  .\n,");
+	printf("the tcache metadata chunk is only allocated and initialized on the first call to \n");
+	printf("malloc/calloc with a Tcache size on glibc 2.42  .\n,");
 	printf("(see __libc_malloc and tcache_malloc_init functions)\n");
 	printf("to avoid the tcache allocation messing with the heap layout , we will get it \n");
 	printf("done now by allocting a Tcache sized chunk , this way it works\n");
@@ -32,7 +32,7 @@ int main(){
 	char * init_tcache = malloc(0x100);
 
 
-	printf("now we allocate our victim chunk ,to avoid speding allcations filling/emptying\n");
+	printf("now we allocate our victim chunk ,to avoid speding allocations filling/emptying\n");
 	printf("the Tcache,we will allocate it as a LargeBin-size chunk , put it in the unsorted");
 	printf("Bin and then cut it by allocating a chunk of a size chosen carefully to make \n");
 	printf("the remainder SmallBin-sized");
@@ -54,7 +54,7 @@ int main(){
 
 
 
-	printf("we aready have an inactive chunk that we used for guarding , use it as a list\n");
+	printf("we already have an inactive chunk that we used for guarding , use it as a list\n");
 	char *(*fake_chunklist)[4] = (char *(*)[4]) guard;
 
 	for (int i = 0 ; i < 5 ; i++){
